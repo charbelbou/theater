@@ -1,0 +1,24 @@
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Theater</th>
+  </tr>
+
+  <ng-container *ngIf="plays.length > 0">
+    <ng-container *ngFor="let play of plays">
+      <tr>
+        <td>{{ play.id }}</td>
+        <td>{{ play.name }}</td>
+        <td>{{ play.theater.name }}</td>
+        <input type="button" value="Delete" (click)="DeletePlay(play.id)" />
+      </tr> </ng-container
+  ></ng-container>
+</table>
+<select name="theaters" [(ngModel)]="theaterId">
+  <option *ngFor="let theater of theaters" value="{{ theater.id }}">
+    {{ theater.name }}
+  </option>
+</select>
+<input type="text" placeholder="Play name" [(ngModel)]="this.name" />
+<input type="button" value="Add" (click)="AddPlay()" />

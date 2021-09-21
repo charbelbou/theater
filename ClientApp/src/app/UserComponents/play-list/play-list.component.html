@@ -1,0 +1,5 @@
+<a *ngFor="let play of plays" [routerLink]="['./', play.id]"
+  >{{ play.name }} <br
+/></a>
+
+<h1 *ngIf="plays.length == 0">No Plays</h1>

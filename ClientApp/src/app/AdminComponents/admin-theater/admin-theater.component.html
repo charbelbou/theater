@@ -1,0 +1,23 @@
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th></th>
+  </tr>
+
+  <ng-container *ngIf="theaters.length > 0">
+    <ng-container *ngFor="let theater of theaters">
+      <tr>
+        <td>{{ theater.id }}</td>
+        <td>{{ theater.name }}</td>
+        <input
+          type="button"
+          value="Delete"
+          (click)="deleteTheater(theater.id)"
+        />
+      </tr> </ng-container
+  ></ng-container>
+
+  <input type="text" [(ngModel)]="this.name" />
+  <input type="button" value="Add" (click)="addTheater()" />
+</table>

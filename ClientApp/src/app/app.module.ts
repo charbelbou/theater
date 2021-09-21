@@ -1,34 +1,62 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+import { RouterModule } from "@angular/router";
 
-import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { AppComponent } from "./app.component";
+import { NavMenuComponent } from "./nav-menu/nav-menu.component";
+import { HomeComponent } from "./UserComponents/home/home.component";
+import { TheaterListComponent } from "./UserComponents/theater-list/theater-list.component";
+import { AdminComponent } from "./AdminComponents/admin/admin.component";
+import { AdminTheaterComponent } from "./AdminComponents/admin-theater/admin-theater.component";
+import { AdminReservationsComponent } from "./AdminComponents/admin-reservations/admin-reservations.component";
+import { TheaterService } from "./Services/theater.service";
+import { PlayListComponent } from "./UserComponents/play-list/play-list.component";
+import { PlaysService } from "./Services/play.service";
+import { AdminPlaysComponent } from "./admincomponents/admin-plays/admin-plays.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    TheaterListComponent,
+    AdminComponent,
+    AdminTheaterComponent,
+    AdminReservationsComponent,
+    PlayListComponent,
+    AdminPlaysComponent,
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ])
+      { path: "", component: HomeComponent, pathMatch: "full" },
+      { path: "theaters", component: TheaterListComponent, pathMatch: "full" },
+      { path: "theaters/:id", component: PlayListComponent, pathMatch: "full" },
+
+      { path: "admin", component: AdminComponent, pathMatch: "full" },
+      {
+        path: "admin/theaters",
+        component: AdminTheaterComponent,
+        pathMatch: "full",
+      },
+
+      {
+        path: "admin/plays",
+        component: AdminPlaysComponent,
+        pathMatch: "full",
+      },
+      {
+        path: "admin/reservations",
+        component: AdminReservationsComponent,
+        pathMatch: "full",
+      },
+    ]),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [TheaterService, PlaysService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
