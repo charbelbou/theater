@@ -1,5 +1,10 @@
 <h1 *ngIf="play">{{ play.name }}</h1>
 
+<!-- 
+  Renders the theater's seats
+  Assigns the class depending on the row and column
+  when clicked, triggers "triggerReservation" with row and column passed 
+-->
 <div *ngFor="let row of rows">
   {{ row }}
   <div
@@ -10,6 +15,11 @@
   ></div>
 </div>
 
+<!-- 
+  Is rendered if a seat is selected
+  Shows the seat name, and a select box to choose whether to confirm or reject it
+  Submit button, triggers submitReservation when clicked
+-->
 <div *ngIf="SelectedSeat">
   <p class="place">{{ SelectedSeat.place }}</p>
   <select name="decision" id="decision" [(ngModel)]="decision">

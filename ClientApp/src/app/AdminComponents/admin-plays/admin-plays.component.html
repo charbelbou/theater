@@ -1,3 +1,8 @@
+<!--
+  Table consisting of:
+    - the attribute headers (id, name, and theater)
+    - Entries of all existing plays, with delete buttons
+-->
 <table>
   <tr>
     <th>Id</th>
@@ -12,9 +17,16 @@
         <td>{{ play.name }}</td>
         <td>{{ play.theater.name }}</td>
         <input type="button" value="Delete" (click)="DeletePlay(play.id)" />
-      </tr> </ng-container
-  ></ng-container>
+      </tr>
+    </ng-container>
+  </ng-container>
 </table>
+
+<!--
+  Select tag, with all existing theaters
+  Text input to input play name
+  'Add' button
+-->
 <select name="theaters" [(ngModel)]="theaterId">
   <option *ngFor="let theater of theaters" value="{{ theater.id }}">
     {{ theater.name }}

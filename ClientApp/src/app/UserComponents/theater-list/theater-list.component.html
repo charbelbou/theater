@@ -1,3 +1,5 @@
 <a *ngFor="let theater of theaters" [routerLink]="['./', theater.id]"
   >{{ theater.name }} <br
 /></a>
+
+<!-- ngFor over the theaters, and render <a> tags, which link to the ./theater.id route -->

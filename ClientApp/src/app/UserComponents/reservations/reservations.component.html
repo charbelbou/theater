@@ -1,4 +1,10 @@
 <h1 *ngIf="play">{{ play.name }}</h1>
+
+<!-- 
+  Renders the theater's seats
+  Assigns the class depending on the row and column
+  when clicked, triggers "reservePlace" with row and column passed 
+-->
 <div *ngFor="let row of rows">
   {{ row }}
   <div

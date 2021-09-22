@@ -8,14 +8,20 @@ import { PlaysService } from "src/app/Services/play.service";
   styleUrls: ["./play-list.component.css"],
 })
 export class PlayListComponent implements OnInit {
+  // Inject PlaysService and Router
   constructor(private myService: PlaysService, private router: Router) {
-    this.id = router.url.split("/")[2];
+    // Use router to parse url and get the theaterId
+    this.theaterId = router.url.split("/")[2];
   }
-  id;
+  theaterId;
   plays = [];
   ngOnInit() {
-    this.myService.getPlaysByTheater(this.id).subscribe((plays: any[]) => {
-      this.plays = plays;
-    });
+    // Get all the plays in specific theater using theaterId
+    this.myService
+      .getPlaysByTheater(this.theaterId)
+      .subscribe((plays: any[]) => {
+        // Assign plays to this.plays
+        this.plays = plays;
+      });
   }
 }

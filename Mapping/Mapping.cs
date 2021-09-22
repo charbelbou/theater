@@ -9,14 +9,17 @@ namespace theater.Mapping
     public class Mapping : Profile
     {
         public Mapping(){
+            // Mapping from Play to PlayResource, and vice versa
             CreateMap<Play,PlayResource>();
             CreateMap<PlayResource,Play>();
 
-            CreateMap<TheaterResource,Theater>();
+            // Mapping from Theater to TheaterResource, and vice versa
             CreateMap<Theater,TheaterResource>();
+            CreateMap<TheaterResource,Theater>();
 
-            CreateMap<ReservationResource,Reservation>();
+            // Mapping from Reservation to ReservationResource, and vice versa
             CreateMap<Reservation,ReservationResource>();
+            CreateMap<ReservationResource,Reservation>();
         }
     }
 }

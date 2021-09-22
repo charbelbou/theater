@@ -1,5 +1,9 @@
 <a *ngFor="let play of plays" [routerLink]="['./plays', play.id]"
   >{{ play.name }} <br
 /></a>
+<!-- 
+  ngFor over the plays, and render <a> tags, which link to the ./plays/id route
+-->
 
 <h1 *ngIf="plays.length == 0">No Plays</h1>
+<!-- Renders "No Plays" if there are no plays in this theater -->
