@@ -1,7 +1,7 @@
-namespace theater.Models
+namespace theater.Controllers.Resources
 {
-    public class Reservation{
-        public Play Play { get; set; }
+    public class ReservationResource
+    {
         public int PlayId { get; set; }
         public int UserId { get; set; }
         public string Confirmed { get; set; }

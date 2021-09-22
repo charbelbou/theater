@@ -19,13 +19,21 @@ export class AdminTheaterComponent implements OnInit {
   }
 
   deleteTheater(id) {
-    this.theaters = this.theaters.filter((theater) => theater.id != id);
-    this.theaterService.deleteTheater(id).subscribe((v) => console.log(v));
+    this.theaterService.deleteTheater(id).subscribe(
+      (v) => {
+        console.log(v);
+        this.theaters = this.theaters.filter((theater) => theater.id != id);
+      },
+      (e) => {
+        alert(e.error);
+      }
+    );
   }
 
   addTheater() {
     this.theaterService.addTheater({ name: this.name }).subscribe((e) => {
       this.theaters.push(e);
+      console.log(e);
     });
   }
 }

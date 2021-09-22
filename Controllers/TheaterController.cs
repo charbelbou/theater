@@ -23,17 +23,17 @@ namespace theater.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Theater>> GetTheaters()
+        public async Task<IEnumerable<TheaterResource>> GetTheaters()
         {
-            var Theaters = await context.Theaters.ToListAsync();
+            var Theaters = await context.Theaters.Include(Theaters=>Theaters.Plays).ToListAsync();
 
-            return Theaters;
+            return map.Map<List<Theater>,List<TheaterResource>>(Theaters);
         }
         [HttpPost]
         public async Task<IActionResult> AddTheater([FromBody] TheaterResource theater){
             var newTheater = map.Map<TheaterResource,Theater>(theater);
             
-            this.context.Theaters.Add(newTheater);
+            this.context.Theaters.AddRange(newTheater);
             await this.context.SaveChangesAsync();
 
             theater.Id = newTheater.Id;
@@ -44,13 +44,15 @@ namespace theater.Controllers
             var theater = await this.context.Theaters.FindAsync(theaterId);
             this.context.Theaters.Remove(theater);
 
-            var plays = await this.context.Plays.Where(play=>play.Theater.Id == theater.Id).ToListAsync();
-            foreach(Play play in plays){
-                this.context.Plays.Remove(play);
+            var plays = await this.context.Plays.Include(plays=>plays.Reservations).Where(play=>play.Theater.Id == theater.Id).ToListAsync();
+
+            if(plays.Any(play=>play.Reservations.Any(reservation=>reservation.Confirmed == "confirmed"))){
+                return BadRequest("Can't delete theater with reservations on plays");
             }
+            this.context.Plays.RemoveRange(plays);
             await this.context.SaveChangesAsync();
 
-            return Ok(plays);
+            return Ok(theater);
         }
     }
 }

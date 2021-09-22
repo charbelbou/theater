@@ -10,8 +10,8 @@ using theater.Persistence;
 namespace theater.Migrations
 {
     [DbContext(typeof(TheaterDbContext))]
-    [Migration("20210921064148_newUpdated")]
-    partial class newUpdated
+    [Migration("20210921161724_ReservationsUpdated")]
+    partial class ReservationsUpdated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,8 +50,11 @@ namespace theater.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<bool>("Confirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Place")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PlayId", "UserId");
 
@@ -93,7 +96,7 @@ namespace theater.Migrations
             modelBuilder.Entity("theater.Models.Play", b =>
                 {
                     b.HasOne("theater.Models.Theater", "Theater")
-                        .WithMany()
+                        .WithMany("Plays")
                         .HasForeignKey("TheaterId");
 
                     b.Navigation("Theater");
@@ -111,6 +114,11 @@ namespace theater.Migrations
             modelBuilder.Entity("theater.Models.Play", b =>
                 {
                     b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("theater.Models.Theater", b =>
+                {
+                    b.Navigation("Plays");
                 });
 #pragma warning restore 612, 618
         }

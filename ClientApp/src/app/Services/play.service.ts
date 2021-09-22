@@ -18,4 +18,7 @@ export class PlaysService {
   addPlay(play) {
     return this.http.post("api/plays", play);
   }
+  getPlay(id) {
+    return this.http.get("api/plays/play/" + id);
+  }
 }

@@ -1,0 +1,5 @@
+<h2>Reservations by play</h2>
+
+<a *ngFor="let play of plays" [routerLink]="['./', play.id]"
+  >{{ play.name }} <br
+/></a>

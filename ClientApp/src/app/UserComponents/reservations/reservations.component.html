@@ -1,0 +1,10 @@
+<h1 *ngIf="play">{{ play.name }}</h1>
+<div *ngFor="let row of rows">
+  {{ row }}
+  <div
+    [ngClass]="class(row + column)"
+    class="seat"
+    *ngFor="let column of columns"
+    (click)="reservePlace(row + column)"
+  ></div>
+</div>

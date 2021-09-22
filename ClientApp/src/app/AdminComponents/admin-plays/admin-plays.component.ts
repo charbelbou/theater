@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Alert } from "selenium-webdriver";
 import { PlaysService } from "src/app/Services/play.service";
 import { TheaterService } from "src/app/Services/theater.service";
 
@@ -21,31 +22,37 @@ export class AdminPlaysComponent implements OnInit {
 
   ngOnInit() {
     this.playService.getPlays().subscribe((plays: any[]) => {
-      this.plays = plays;
       console.log(plays);
+      this.plays = plays;
     });
     this.theaterService.getTheaters().subscribe((theaters: any[]) => {
-      console.log(theaters);
       this.theaters = theaters;
     });
   }
   DeletePlay(id) {
-    this.plays = this.plays.filter((play) => play.id != id);
-    this.playService.deletePlay(id).subscribe();
+    var myPlay = this.plays.find((play) => play.id == id);
+    var temp: any[] = [];
+    if (
+      myPlay.reservations.find(
+        (reservation) => reservation.confirmed == "confirmed"
+      )
+    ) {
+      alert("Can't delete plays which has confirmed reservations");
+    } else {
+      this.playService.deletePlay(id).subscribe((response) => {
+        this.plays = this.plays.filter((play) => play.id != id);
+      });
+    }
   }
   AddPlay() {
-    var selectedTheater = this.theaters.filter(
-      (theater) => theater.id == this.theaterId
-    )[0].name;
-
     var play = {
       name: this.name,
-      theater: {
-        name: selectedTheater,
-      },
+      theater: this.theaters.filter(
+        (theater) => theater.id == this.theaterId
+      )[0],
     };
-    console.log(play);
     this.playService.addPlay(play).subscribe((returned) => {
+      console.log(returned);
       this.plays.push(returned);
     });
   }

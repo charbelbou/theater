@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using theater.Persistence;
 
 namespace theater.Migrations
 {
     [DbContext(typeof(TheaterDbContext))]
-    partial class TheaterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210921095517_New")]
+    partial class New
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,16 +47,13 @@ namespace theater.Migrations
                     b.Property<int>("PlayId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Place")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Confirmed")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
-                    b.HasKey("PlayId", "Place", "UserId");
+                    b.HasKey("PlayId", "UserId");
 
                     b.ToTable("Reservations");
                 });
@@ -102,13 +101,11 @@ namespace theater.Migrations
 
             modelBuilder.Entity("theater.Models.Reservation", b =>
                 {
-                    b.HasOne("theater.Models.Play", "Play")
+                    b.HasOne("theater.Models.Play", null)
                         .WithMany("Reservations")
                         .HasForeignKey("PlayId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Play");
                 });
 
             modelBuilder.Entity("theater.Models.Play", b =>

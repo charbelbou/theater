@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using theater.Persistence;
 
 namespace theater.Migrations
 {
     [DbContext(typeof(TheaterDbContext))]
-    partial class TheaterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210921174136_ReservationsUpdated1")]
+    partial class ReservationsUpdated1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,16 +47,16 @@ namespace theater.Migrations
                     b.Property<int>("PlayId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Place")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Confirmed")
+                    b.Property<bool>("Confirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Place")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PlayId", "Place", "UserId");
+                    b.HasKey("PlayId", "UserId");
 
                     b.ToTable("Reservations");
                 });

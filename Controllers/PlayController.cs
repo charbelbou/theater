@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using theater.Controllers.Resources;
 using theater.Models;
 using theater.Persistence;
 
@@ -21,24 +22,29 @@ namespace theater.Controllers
         }
 
         [HttpGet("{theaterId}")]
-        public async Task<IEnumerable<Play>> PlaysByTheater(int theaterId)
+        public async Task<IEnumerable<PlayResource>> PlaysByTheater(int theaterId)
         {
-            var Plays = await context.Plays.Where(play => play.Theater.Id == theaterId).ToListAsync();
+            var Plays = await context.Plays.Where(play => play.Theater.Id == theaterId).Include(Play=>Play.Theater).ToListAsync();
 
-            return Plays;
+            return map.Map<List<Play>,List<PlayResource>>(Plays);
         }
         [HttpGet]
-        public async Task<IEnumerable<Play>> AllPlays(){
-            var Plays = await context.Plays.Include(Plays=>Plays.Theater).ToListAsync();
-            return Plays;
+        public async Task<IEnumerable<PlayResource>> AllPlays(){
+            var Plays = await context.Plays.Include(Plays=>Plays.Theater).Include(Plays=>Plays.Reservations).ToListAsync();
+
+            return map.Map<List<Play>,List<PlayResource>>(Plays);
         }
         [HttpPost]
-        public async Task<IActionResult> AddPlay([FromBody] Play play){
+        public async Task<IActionResult> AddPlay([FromBody] PlayResource play){
+            var Play = map.Map<PlayResource,Play>(play);
 
-            this.context.Plays.Add(play);
+            Play.Theater =  await this.context.Theaters.FindAsync(play.Theater.Id);
 
+
+            this.context.Plays.Add(Play);
             await this.context.SaveChangesAsync();
 
+            play.Id = Play.Id;
             return Ok(play);
         }
         [HttpDelete("{id}")]
@@ -48,6 +54,12 @@ namespace theater.Controllers
             await this.context.SaveChangesAsync();
 
             return Ok(play);
+        }
+        [HttpGet("play/{id}")]
+        public async Task<PlayResource> GetPlay(int id){
+            var play = await this.context.Plays.FirstOrDefaultAsync(i=>i.Id==id);
+
+            return map.Map<Play,PlayResource>(play);
         }
     }
 }

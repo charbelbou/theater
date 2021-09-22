@@ -15,6 +15,9 @@ import { TheaterService } from "./Services/theater.service";
 import { PlayListComponent } from "./UserComponents/play-list/play-list.component";
 import { PlaysService } from "./Services/play.service";
 import { AdminPlaysComponent } from "./admincomponents/admin-plays/admin-plays.component";
+import { ReservationsComponent } from "./usercomponents/reservations/reservations.component";
+import { ReservationService } from "./Services/reservation.service";
+import { AdminReservationMenuComponent } from "./admincomponents/admin-reservation-menu/admin-reservation-menu.component";
 
 @NgModule({
   declarations: [
@@ -27,6 +30,8 @@ import { AdminPlaysComponent } from "./admincomponents/admin-plays/admin-plays.c
     AdminReservationsComponent,
     PlayListComponent,
     AdminPlaysComponent,
+    ReservationsComponent,
+    AdminReservationMenuComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -36,6 +41,11 @@ import { AdminPlaysComponent } from "./admincomponents/admin-plays/admin-plays.c
       { path: "", component: HomeComponent, pathMatch: "full" },
       { path: "theaters", component: TheaterListComponent, pathMatch: "full" },
       { path: "theaters/:id", component: PlayListComponent, pathMatch: "full" },
+      {
+        path: "theaters/:id/plays/:play",
+        component: ReservationsComponent,
+        pathMatch: "full",
+      },
 
       { path: "admin", component: AdminComponent, pathMatch: "full" },
       {
@@ -51,12 +61,17 @@ import { AdminPlaysComponent } from "./admincomponents/admin-plays/admin-plays.c
       },
       {
         path: "admin/reservations",
+        component: AdminReservationMenuComponent,
+        pathMatch: "full",
+      },
+      {
+        path: "admin/reservations/:id",
         component: AdminReservationsComponent,
         pathMatch: "full",
       },
     ]),
   ],
-  providers: [TheaterService, PlaysService],
+  providers: [TheaterService, PlaysService, ReservationService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

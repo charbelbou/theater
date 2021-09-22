@@ -21,10 +21,3 @@
 .rejected {
   background-color: red;
 }
-
-.place {
-  font-weight: bold;
-  font-size: 25px;
-  display: inline-block;
-  margin-right: 15px;
-}

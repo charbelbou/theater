@@ -15,7 +15,7 @@ namespace theater.Persistence
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
-            modelBuilder.Entity<Reservation>().HasKey(res=> new {res.PlayId,res.UserId});
+            modelBuilder.Entity<Reservation>().HasKey(res=> new {res.PlayId,res.Place,res.UserId});
         }
     }
 }
