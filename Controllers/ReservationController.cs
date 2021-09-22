@@ -43,16 +43,19 @@ namespace theater.Controllers
         }
         [HttpPost]
         // Post Reservation
-        public async Task<IActionResult> AddReservation([FromBody] ReservationResource reservation){
-            // Map the passed reservation from ReservationResource to Reservation
-            var newReservation = map.Map<ReservationResource,Reservation>(reservation);
+        public async Task<IActionResult> AddReservation([FromBody] List<ReservationResource> reservation){
+            // Map the passed reservations from ReservationResource to Reservation
+            var newReservations = map.Map<List<ReservationResource>,List<Reservation>>(reservation);
 
-            // Find the Play object to which this reservation belongs to, and assign it
+            // Find the Play object to which these reservations belongs to,
+            // and assign them to the reservations
             // Avoid duplication
-            newReservation.Play = await this.context.Plays.FindAsync(reservation.PlayId);
+            var Play = await this.context.Plays.FindAsync(reservation.First().PlayId);
+            newReservations.ForEach(reservation=>reservation.Play = Play);
 
-            // Add reservation and save changes
-            this.context.Reservations.Add(newReservation);
+
+            // Add all reservations and save changes
+            this.context.Reservations.AddRange(newReservations);
             await this.context.SaveChangesAsync();
 
             // Return the object

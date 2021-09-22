@@ -27,6 +27,9 @@ export class ReservationsComponent implements OnInit {
   // All reservations
   reservations: any[];
 
+  // Seats that have been selected to be reserved
+  selectedSeats: any[] = [];
+
   // Used to render the rows and columns, and assign each one a unique "Place" attribute (eg. A3, B5..)
   rows = ["A", "B", "C", "D"];
   columns = [1, 2, 3, 4, 5, 6, 7];
@@ -34,7 +37,6 @@ export class ReservationsComponent implements OnInit {
     // Use PlaysService to get play using this.id, and assign the play to this.play
     this.myPlaysService.getPlay(this.id).subscribe((play) => {
       this.play = play;
-      console.log(play);
     });
     // Use ReservationService to get all reservations for a specific play with this.id
     this.myReservationService
@@ -51,22 +53,45 @@ export class ReservationsComponent implements OnInit {
       });
   }
 
+  // Triggered when a seat is clicked
   reservePlace(place) {
+    // Checks if reservation for this seat exists
     var findReservation = this.findReservation(place);
-    var newReservation = {
-      PlayId: this.play.id,
-      UserId: this.MY_ID,
-      Confirmed: "unconfirmed",
-      Place: place,
-    };
-    console.log(newReservation);
     if (!findReservation) {
-      this.myReservationService
-        .addReservation(newReservation)
-        .subscribe((reservation) => {
-          this.reservations.push(reservation);
+      // If there is no reservation, then check if the seat has already been selected
+      // for reservation (check if it exists in selectedSeats)
+      var selectedSeat = this.selectedSeats.find((seat) => seat.place == place);
+
+      if (selectedSeat) {
+        // If it has been selected, then filter it out from the
+        // array of selectedSeats
+        this.selectedSeats = this.selectedSeats.filter(
+          (seat) => seat.place != place
+        );
+      } else {
+        // If it hasn't been selected, then push it to
+        // the array of selectedSeats
+        this.selectedSeats.push({
+          playId: this.play.id,
+          userId: this.MY_ID,
+          confirmed: "unconfirmed",
+          place: place,
         });
+      }
     }
+  }
+
+  // Triggered when reserve button has been clicked
+  ReserveSeats() {
+    // Use ReservationService to add reservation for the selected seats
+    this.myReservationService
+      .addReservation(this.selectedSeats)
+      .subscribe((reservation) => {
+        // Add the new reservations to the existing list of reservatiosn
+        this.reservations = this.reservations.concat(reservation);
+        // Empty out the selected seats
+        this.selectedSeats = [];
+      });
   }
 
   // Determines which class the html seat tag belongs to (determines the coloring of the box)
@@ -84,11 +109,15 @@ export class ReservationsComponent implements OnInit {
     }
     // If reservation doesn't exist, return null (white seat)
     else {
-      return null;
+      var findInSelected = this.findSeatInSelected(setPlace);
+      return findInSelected ? "selected" : null;
     }
   }
   // Finds the reservation based on the place (A2,B3) that is passed
   findReservation(place) {
     return this.reservations.find((reservation) => reservation.place == place);
+  }
+  findSeatInSelected(place) {
+    return this.selectedSeats.find((seat) => seat.place == place);
   }
 }

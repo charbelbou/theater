@@ -21,3 +21,6 @@
 .rejected {
   background-color: red;
 }
+.selected {
+  background-color: blue;
+}
