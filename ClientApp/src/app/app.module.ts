@@ -18,6 +18,7 @@ import { AdminPlaysComponent } from "./admincomponents/admin-plays/admin-plays.c
 import { ReservationsComponent } from "./usercomponents/reservations/reservations.component";
 import { ReservationService } from "./Services/reservation.service";
 import { AdminReservationMenuComponent } from "./admincomponents/admin-reservation-menu/admin-reservation-menu.component";
+import { AuthModule, AuthService } from "@auth0/auth0-angular";
 
 @NgModule({
   declarations: [
@@ -37,6 +38,10 @@ import { AdminReservationMenuComponent } from "./admincomponents/admin-reservati
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
     HttpClientModule,
     FormsModule,
+    AuthModule.forRoot({
+      domain: "dev-r8lrb84i.us.auth0.com",
+      clientId: "EpWSCv9oTlxm0xpTDgtdwLGCXImyoZ0L",
+    }),
     RouterModule.forRoot([
       { path: "", component: HomeComponent, pathMatch: "full" },
       { path: "theaters", component: TheaterListComponent, pathMatch: "full" },
@@ -71,7 +76,7 @@ import { AdminReservationMenuComponent } from "./admincomponents/admin-reservati
       },
     ]),
   ],
-  providers: [TheaterService, PlaysService, ReservationService],
+  providers: [TheaterService, PlaysService, ReservationService, AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
