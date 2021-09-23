@@ -39,43 +39,48 @@ export class AdminPlaysComponent implements OnInit {
   // Triggered when delete button is clicked,
   // passes the id of the play being deleted
   DeletePlay(id) {
-    // Find the play being deleted from the list of plays (this.plays)
-    var myPlay = this.plays.find((play) => play.id == id);
+    if (confirm("Are you sure you want to delete this play?")) {
+      // Find the play being deleted from the list of plays (this.plays)
+      var myPlay = this.plays.find((play) => play.id == id);
 
-    // Check if myPlay has any reservations that are confirmed
-    var ConfirmedReservation = myPlay.reservations.find(
-      (reservation) => reservation.confirmed == "confirmed"
-    );
+      // Check if myPlay has any reservations that are confirmed
+      var ConfirmedReservation = myPlay.reservations.find(
+        (reservation) => reservation.confirmed == "confirmed"
+      );
 
-    // If a confirmed reservation does exist, trigger an alert box
-    // Can't delete plays which have confirmed reservations
-    if (ConfirmedReservation) {
-      alert("Can't delete plays which have confirmed reservations");
-    }
-    // If a confirmed reservation doesn't exist,
-    // then use PlaysService to delete the play
-    else {
-      this.playService.deletePlay(id).subscribe((response) => {
-        // Filter out the delete play using it's Id
-        this.plays = this.plays.filter((play) => play.id != id);
-      });
+      // If a confirmed reservation does exist, trigger an alert box
+      // Can't delete plays which have confirmed reservations
+      if (ConfirmedReservation) {
+        alert("Can't delete plays which have confirmed reservations");
+      }
+      // If a confirmed reservation doesn't exist,
+      // then use PlaysService to delete the play
+      else {
+        this.playService.deletePlay(id).subscribe((response) => {
+          // Filter out the delete play using it's Id
+          this.plays = this.plays.filter((play) => play.id != id);
+        });
+      }
     }
   }
 
   // Triggered when add button is clicked
   AddPlay() {
-    // Create play object using:
-    // - this.name
-    // - find theater object where theater.id == this.theaterId
-    var play = {
-      name: this.name,
-      theater: this.theaters.find((theater) => theater.id == this.theaterId),
-    };
+    if (confirm("Are you sure you want to add this play?")) {
+      // Create play object using:
+      // - this.name
+      // - find theater object where theater.id == this.theaterId
+      var play = {
+        name: this.name,
+        theater: this.theaters.find((theater) => theater.id == this.theaterId),
+      };
 
-    // Add the play object using PlaysService
-    this.playService.addPlay(play).subscribe((returned) => {
-      // Push the returned object into the array of plays.
-      this.plays.push(returned);
-    });
+      // Add the play object using PlaysService
+      this.playService.addPlay(play).subscribe((returned) => {
+        // Push the returned object into the array of plays.
+        this.plays.push(returned);
+        this.name = "";
+      });
+    }
   }
 }
