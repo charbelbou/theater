@@ -5,6 +5,8 @@ namespace theater.Models
         // The play to which this reservation is for
         public int PlayId { get; set; }
         // The Id of the play to which this reservation is for
+        public User User { get; set; }
+        // The user to which this reservation belongs
         public int UserId { get; set; }
         // The Id of the User which this reservation belongs to
         public string Confirmed { get; set; }

@@ -20,6 +20,10 @@ namespace theater.Mapping
             // Mapping from Reservation to ReservationResource, and vice versa
             CreateMap<Reservation,ReservationResource>();
             CreateMap<ReservationResource,Reservation>();
+
+            // Mapping from UserResource to User
+            CreateMap<UserResource,User>();
+            CreateMap<User,UserResource>();
         }
     }
 }

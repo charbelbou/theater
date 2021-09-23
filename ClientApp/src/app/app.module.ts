@@ -18,7 +18,10 @@ import { AdminPlaysComponent } from "./admincomponents/admin-plays/admin-plays.c
 import { ReservationsComponent } from "./usercomponents/reservations/reservations.component";
 import { ReservationService } from "./Services/reservation.service";
 import { AdminReservationMenuComponent } from "./admincomponents/admin-reservation-menu/admin-reservation-menu.component";
-import { AuthModule, AuthService } from "@auth0/auth0-angular";
+import { AuthGuard, AuthModule, AuthService } from "@auth0/auth0-angular";
+import { MyAuth } from "./Services/auth.service";
+import { CustomAuthGuard } from "./Services/auth-guard.service";
+import { AuthenticationComponent } from "./authentication/authentication.component";
 
 @NgModule({
   declarations: [
@@ -43,13 +46,35 @@ import { AuthModule, AuthService } from "@auth0/auth0-angular";
       clientId: "EpWSCv9oTlxm0xpTDgtdwLGCXImyoZ0L",
     }),
     RouterModule.forRoot([
-      { path: "", component: HomeComponent, pathMatch: "full" },
-      { path: "theaters", component: TheaterListComponent, pathMatch: "full" },
-      { path: "theaters/:id", component: PlayListComponent, pathMatch: "full" },
+      {
+        path: "authenticate",
+        component: AuthenticationComponent,
+        pathMatch: "full",
+      },
+      // Apply CustomAuthGuard to prevent non-signed in users from accessing the pages
+      {
+        path: "",
+        component: HomeComponent,
+        pathMatch: "full",
+        canActivate: [CustomAuthGuard],
+      },
+      {
+        path: "theaters",
+        component: TheaterListComponent,
+        pathMatch: "full",
+        canActivate: [CustomAuthGuard],
+      },
+      {
+        path: "theaters/:id",
+        component: PlayListComponent,
+        pathMatch: "full",
+        canActivate: [CustomAuthGuard],
+      },
       {
         path: "theaters/:id/plays/:play",
         component: ReservationsComponent,
         pathMatch: "full",
+        canActivate: [CustomAuthGuard],
       },
 
       { path: "admin", component: AdminComponent, pathMatch: "full" },
@@ -76,7 +101,14 @@ import { AuthModule, AuthService } from "@auth0/auth0-angular";
       },
     ]),
   ],
-  providers: [TheaterService, PlaysService, ReservationService, AuthService],
+  providers: [
+    TheaterService,
+    PlaysService,
+    ReservationService,
+    AuthService,
+    MyAuth,
+    CustomAuthGuard,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

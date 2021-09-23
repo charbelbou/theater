@@ -5,6 +5,7 @@
   Assigns the class depending on the row and column
   when clicked, triggers "triggerReservation" with row and column passed 
 -->
+
 <div *ngFor="let row of rows">
   {{ row }}
   <div
@@ -12,7 +13,11 @@
     class="seat"
     *ngFor="let column of columns"
     (click)="triggerReservation(row + column)"
-  ></div>
+  >
+    <span style="bottom: 25px; position: relative" *ngIf="row == 'A'">{{
+      column
+    }}</span>
+  </div>
 </div>
 
 <!-- 
@@ -21,10 +26,15 @@
   Submit button, triggers submitReservation when clicked
 -->
 <div *ngIf="SelectedSeat">
-  <p class="place">{{ SelectedSeat.place }}</p>
-  <select name="decision" id="decision" [(ngModel)]="decision">
-    <option value="confirmed">Confirm</option>
-    <option value="rejected">Reject</option>
-  </select>
-  <input type="button" value="Submit" (click)="submitReservation()" />
+  <p class="place">
+    {{ SelectedSeat.place }}
+  </p>
+  <p>Reserved by {{ SelectedSeat.user.email }}</p>
+  <ng-container *ngIf="SelectedSeat.confirmed == 'unconfirmed'">
+    <select name="decision" id="decision" [(ngModel)]="decision">
+      <option value="confirmed">Confirm</option>
+      <option value="rejected">Reject</option>
+    </select>
+    <input type="button" value="Submit" (click)="submitReservation()" />
+  </ng-container>
 </div>

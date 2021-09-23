@@ -31,11 +31,23 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-dark" (click)="console.log('qweas')"
-              >Login</a
-            >
+            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
         </ul>
+
+        <ul class="navbar-nav flex-grow dropdown" *ngIf="user">
+          <li
+            class="nav-item"
+            [routerLinkActive]="['link-active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a class="nav-link text-dark">{{ user.email }}</a>
+          </li>
+          <div class="dropdown-content nav-link text-dark">
+            <li (click)="logout()">Logout</li>
+          </div>
+        </ul>
+        `
       </div>
     </div>
   </nav>

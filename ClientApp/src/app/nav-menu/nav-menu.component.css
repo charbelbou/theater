@@ -14,5 +14,21 @@ html {
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  background-color: white;
+  border: black 1px solid;
+  min-width: 160px;
+  display: none;
+  position: absolute;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
 }

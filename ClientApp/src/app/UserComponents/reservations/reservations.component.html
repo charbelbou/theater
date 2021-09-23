@@ -6,13 +6,17 @@
   when clicked, triggers "reservePlace" with row and column passed 
 -->
 <div *ngFor="let row of rows">
-  {{ row }}
+  <span>{{ row }}</span>
   <div
     [ngClass]="class(row + column)"
     class="seat"
     *ngFor="let column of columns"
     (click)="reservePlace(row + column)"
-  ></div>
+  >
+    <span style="bottom: 25px; position: relative" *ngIf="row == 'A'">{{
+      column
+    }}</span>
+  </div>
 </div>
 
 <!-- 

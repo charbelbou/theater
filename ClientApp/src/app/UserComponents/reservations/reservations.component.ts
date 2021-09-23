@@ -19,6 +19,7 @@ export class ReservationsComponent implements OnInit {
     this.id = router.url.split("/")[4];
   }
   MY_ID = 2;
+  user;
 
   // Play id
   id;
@@ -48,9 +49,10 @@ export class ReservationsComponent implements OnInit {
         this.reservations = reservations.filter(
           (reservation) =>
             reservation.confirmed != "rejected" ||
-            reservation.userId == this.MY_ID
+            reservation.userId == this.user.id
         );
       });
+    this.user = JSON.parse(localStorage.getItem("user"));
   }
 
   // Triggered when a seat is clicked
@@ -73,7 +75,8 @@ export class ReservationsComponent implements OnInit {
         // the array of selectedSeats
         this.selectedSeats.push({
           playId: this.play.id,
-          userId: this.MY_ID,
+          userId: this.user.id,
+          user: this.user,
           confirmed: "unconfirmed",
           place: place,
         });
@@ -103,7 +106,7 @@ export class ReservationsComponent implements OnInit {
       // If the reservation exists,
       // Check if it belongs to another user, if it does, return "otheruser" (grey)
       // If it doesn't, return the confirmed status
-      return findReservation.userId != this.MY_ID
+      return findReservation.userId != this.user.id
         ? "otheruser"
         : findReservation.confirmed;
     }

@@ -27,7 +27,7 @@ namespace theater.Controllers
         // Get reservations belonging to a specific Play with id (passed as parameter)
         public async Task<IEnumerable<ReservationResource>> GetReservations(int id){
             // Get all reservations for the Play with the passed Id
-            var Reservations = await this.context.Reservations.Where(reservation=>reservation.Play.Id==id).ToListAsync();
+            var Reservations = await this.context.Reservations.Where(reservation=>reservation.Play.Id==id).Include(Reservation=>Reservation.User).ToListAsync();
 
             // Map from Reservation to ReservationResource, and return
             return map.Map<List<Reservation>,List<ReservationResource>>(Reservations);
@@ -36,7 +36,7 @@ namespace theater.Controllers
         // Get all Reservations
         public async Task<IEnumerable<ReservationResource>> GetAllReservations(){
             // Get all reservations as List
-            var Reservations = await this.context.Reservations.ToListAsync();
+            var Reservations = await this.context.Reservations.Include(Reservation=>Reservation.User).ToListAsync();
 
             // Map from Reservation to ReservationResource, and return
             return map.Map<List<Reservation>,List<ReservationResource>>(Reservations);
@@ -47,11 +47,13 @@ namespace theater.Controllers
             // Map the passed reservations from ReservationResource to Reservation
             var newReservations = map.Map<List<ReservationResource>,List<Reservation>>(reservation);
 
-            // Find the Play object to which these reservations belongs to,
+            // Find the Play object and user object to which these reservations belongs to,
             // and assign them to the reservations
             // Avoid duplication
             var Play = await this.context.Plays.FindAsync(reservation.First().PlayId);
+            var User = await this.context.Users.FindAsync(reservation.First().UserId);
             newReservations.ForEach(reservation=>reservation.Play = Play);
+            newReservations.ForEach(reservation=>reservation.User = User);
 
 
             // Add all reservations and save changes

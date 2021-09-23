@@ -61,12 +61,9 @@ export class AdminReservationsComponent implements OnInit {
     // Check if reservation exists for this seat
     var Reservation = this.findReservation(seat);
 
-    // If reservation doesn't exist, or it does exist but is confirmed, then assign null to SelectedSeat
-    // However, if Reservation exists and is unconfirmed (pending), then assign it to the SelectedSeat
-    this.SelectedSeat =
-      !Reservation || Reservation.confirmed != "unconfirmed"
-        ? null
-        : Reservation;
+    // If reservation doesn't exist then assign null to SelectedSeat
+    // However, if Reservation exists then assign it to the SelectedSeat
+    this.SelectedSeat = !Reservation ? null : Reservation;
   }
 
   // Triggered when reservation decision is submitted

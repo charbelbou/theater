@@ -11,8 +11,19 @@ export class NavMenuComponent {
 
   constructor(public auth: AuthService) {}
 
+  ngOnInit() {}
+
+  user = JSON.parse(localStorage.getItem("user"));
+
   collapse() {
     this.isExpanded = false;
+  }
+
+  logout() {
+    // On logout, empty out local storage
+    this.auth.logout();
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
   }
 
   toggle() {
