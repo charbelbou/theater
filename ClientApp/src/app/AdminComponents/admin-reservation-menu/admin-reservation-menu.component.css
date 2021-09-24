@@ -1,0 +1,14 @@
+.play {
+  border: black 1px solid;
+  width: 250px;
+  height: 200px;
+  display: inline-block;
+  margin: 10px;
+}
+
+.title {
+  height: auto;
+  width: 100%;
+  text-align: center;
+  background-color: whitesmoke;
+}

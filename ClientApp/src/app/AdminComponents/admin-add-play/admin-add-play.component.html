@@ -1,0 +1,39 @@
+Theater:
+<select name="theaters" [(ngModel)]="theaterId" class="margin">
+  <option *ngFor="let theater of theaters" value="{{ theater.id }}">
+    {{ theater.name }}
+  </option>
+</select>
+<br />
+
+Play Name:
+<input type="text" [(ngModel)]="this.play.name" class="margin" />
+<br />
+
+Play Description: <br />
+<textarea
+  name="description"
+  id="description"
+  cols="30"
+  rows="5"
+  [(ngModel)]="this.play.description"
+  class="margin"
+></textarea>
+<br />
+
+Rows:
+<select name="rows" id="rows" [(ngModel)]="this.play.rows" class="margin">
+  <option *ngFor="let number of numbers" value="{{ number }}">
+    {{ number }}
+  </option>
+</select>
+Columns:
+<select name="rows" id="rows" [(ngModel)]="this.play.columns">
+  <option *ngFor="let number of numbers" value="{{ number }}">
+    {{ number }}
+  </option>
+</select>
+<br />
+
+<input type="file" #fileInput /> <br />
+<input type="button" value="Add" (click)="AddPlay()" />

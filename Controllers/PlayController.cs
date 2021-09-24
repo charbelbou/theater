@@ -30,7 +30,7 @@ namespace theater.Controllers
         {
             // Get all plays belonging to the Theater where Id = theaterId
             // Including theater objects
-            var Plays = await context.Plays.Where(play => play.Theater.Id == theaterId).Include(Play=>Play.Theater).ToListAsync();
+            var Plays = await context.Plays.Where(play => play.Theater.Id == theaterId).Include(Play=>Play.Theater).Include(Play=>Play.Photo).ToListAsync();
 
             // Map from Play to PlayResource and return list
             return map.Map<List<Play>,List<PlayResource>>(Plays);
@@ -39,7 +39,7 @@ namespace theater.Controllers
         // Get all exisiting Plays in DbSet
         public async Task<IEnumerable<PlayResource>> AllPlays(){
             // Get all plays including the theaters and reservations
-            var Plays = await context.Plays.Include(Plays=>Plays.Theater).Include(Plays=>Plays.Reservations).ToListAsync();
+            var Plays = await context.Plays.Include(Plays=>Plays.Theater).Include(Plays=>Plays.Reservations).Include(Play=>Play.Photo).ToListAsync();
 
             // Map from Play to PlayResource and return list
             return map.Map<List<Play>,List<PlayResource>>(Plays);

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using theater.Models;
 
 namespace theater.Controllers.Resources
 {
@@ -15,6 +14,14 @@ namespace theater.Controllers.Resources
         // TheaterResource to which this PlayResource belongs to
         public ICollection<ReservationResource> Reservations { get; set; }
         // Collection of ReservationResources which belong to this PlayResource
+        public int Rows { get; set; }
+        // Amount of rows available for the play
+        public int Columns { get; set; }
+        // Amount of columns available for the play
+        public string Description { get; set; }
+        // Description of the play
+        public PhotoResource Photo { get; set; }
+        // Play's photo
 
         public PlayResource()
         {

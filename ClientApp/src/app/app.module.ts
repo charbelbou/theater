@@ -22,6 +22,7 @@ import { AuthGuard, AuthModule, AuthService } from "@auth0/auth0-angular";
 import { MyAuth } from "./Services/auth.service";
 import { CustomAuthGuard } from "./Services/auth-guard.service";
 import { AuthenticationComponent } from "./authentication/authentication.component";
+import { AdminAddPlayComponent } from "./admincomponents/admin-add-play/admin-add-play.component";
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AuthenticationComponent } from "./authentication/authentication.compone
     AdminPlaysComponent,
     ReservationsComponent,
     AdminReservationMenuComponent,
+    AdminAddPlayComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -97,6 +99,11 @@ import { AuthenticationComponent } from "./authentication/authentication.compone
       {
         path: "admin/reservations/:id",
         component: AdminReservationsComponent,
+        pathMatch: "full",
+      },
+      {
+        path: "admin/add",
+        component: AdminAddPlayComponent,
         pathMatch: "full",
       },
     ]),

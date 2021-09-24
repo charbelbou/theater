@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { Alert } from "selenium-webdriver";
 import { PlaysService } from "src/app/Services/play.service";
 import { TheaterService } from "src/app/Services/theater.service";
@@ -12,15 +13,10 @@ export class AdminPlaysComponent implements OnInit {
   // Inject PlayService and TheaterService
   constructor(
     private playService: PlaysService,
-    private theaterService: TheaterService
+    private theaterService: TheaterService,
+    private route: Router
   ) {}
 
-  // Name is binded to name of play being added, using text input
-  // TheaterId is binded to the Id of the theater, to which the new play belongs to
-  name;
-  theaterId;
-
-  theaters: any[] = [];
   plays = [];
 
   ngOnInit() {
@@ -28,11 +24,6 @@ export class AdminPlaysComponent implements OnInit {
     this.playService.getPlays().subscribe((plays: any[]) => {
       console.log(plays);
       this.plays = plays;
-    });
-
-    // Get all theaters using TheaterService and assign them to this.theaters
-    this.theaterService.getTheaters().subscribe((theaters: any[]) => {
-      this.theaters = theaters;
     });
   }
 
@@ -64,23 +55,8 @@ export class AdminPlaysComponent implements OnInit {
     }
   }
 
-  // Triggered when add button is clicked
-  AddPlay() {
-    if (confirm("Are you sure you want to add this play?")) {
-      // Create play object using:
-      // - this.name
-      // - find theater object where theater.id == this.theaterId
-      var play = {
-        name: this.name,
-        theater: this.theaters.find((theater) => theater.id == this.theaterId),
-      };
-
-      // Add the play object using PlaysService
-      this.playService.addPlay(play).subscribe((returned) => {
-        // Push the returned object into the array of plays.
-        this.plays.push(returned);
-        this.name = "";
-      });
-    }
+  // Clicking the add button, navigates to add play page
+  GoToAdd() {
+    this.route.navigate(["admin/add"]);
   }
 }

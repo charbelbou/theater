@@ -21,9 +21,13 @@ namespace theater.Mapping
             CreateMap<Reservation,ReservationResource>();
             CreateMap<ReservationResource,Reservation>();
 
-            // Mapping from UserResource to User
-            CreateMap<UserResource,User>();
+            // Mapping from User to UserResource, and vice versa
             CreateMap<User,UserResource>();
+            CreateMap<UserResource,User>();
+
+            // Mapping from Photo to PhotoResource, and vice versa
+            CreateMap<Photo,PhotoResource>();
+            CreateMap<PhotoResource,Photo>();
         }
     }
 }

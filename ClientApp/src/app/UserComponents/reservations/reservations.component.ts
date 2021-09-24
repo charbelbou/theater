@@ -18,7 +18,9 @@ export class ReservationsComponent implements OnInit {
     // Parse the url using router, and assign the play id to this.id
     this.id = router.url.split("/")[4];
   }
-  MY_ID = 2;
+  // Letters used to configure the number of rows
+  letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
   user;
 
   // Play id
@@ -32,12 +34,21 @@ export class ReservationsComponent implements OnInit {
   selectedSeats: any[] = [];
 
   // Used to render the rows and columns, and assign each one a unique "Place" attribute (eg. A3, B5..)
-  rows = ["A", "B", "C", "D"];
-  columns = [1, 2, 3, 4, 5, 6, 7];
+  rows = [];
+  columns = [];
   ngOnInit() {
     // Use PlaysService to get play using this.id, and assign the play to this.play
     this.myPlaysService.getPlay(this.id).subscribe((play) => {
       this.play = play;
+      // Configure the columns, fill an array from 1 to number of columns (1,2,3,4...)
+      for (let i = 1; i <= this.play.columns; i++) {
+        this.columns.push(i);
+      }
+      // Configure the rows, fill an array from the first letter of the alphabet
+      // to the ith number of rows (A,B,C,D...)
+      for (let i = 0; i < this.play.rows; i++) {
+        this.rows.push(this.letters[i]);
+      }
     });
     // Use ReservationService to get all reservations for a specific play with this.id
     this.myReservationService

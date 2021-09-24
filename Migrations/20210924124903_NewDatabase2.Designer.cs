@@ -10,8 +10,8 @@ using theater.Persistence;
 namespace theater.Migrations
 {
     [DbContext(typeof(TheaterDbContext))]
-    [Migration("20210921174136_ReservationsUpdated1")]
-    partial class ReservationsUpdated1
+    [Migration("20210924124903_NewDatabase2")]
+    partial class NewDatabase2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,27 @@ namespace theater.Migrations
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("theater.Models.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FileName")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlayId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayId")
+                        .IsUnique();
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("theater.Models.Play", b =>
                 {
                     b.Property<int>("Id")
@@ -28,9 +49,18 @@ namespace theater.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Columns")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rows")
+                        .HasColumnType("int");
 
                     b.Property<int?>("TheaterId")
                         .HasColumnType("int");
@@ -47,16 +77,18 @@ namespace theater.Migrations
                     b.Property<int>("PlayId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Place")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Confirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Place")
+                    b.Property<string>("Confirmed")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PlayId", "UserId");
+                    b.HasKey("PlayId", "Place", "UserId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reservations");
                 });
@@ -93,6 +125,15 @@ namespace theater.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("theater.Models.Photo", b =>
+                {
+                    b.HasOne("theater.Models.Play", null)
+                        .WithOne("Photo")
+                        .HasForeignKey("theater.Models.Photo", "PlayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("theater.Models.Play", b =>
                 {
                     b.HasOne("theater.Models.Theater", "Theater")
@@ -110,11 +151,21 @@ namespace theater.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("theater.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Play");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("theater.Models.Play", b =>
                 {
+                    b.Navigation("Photo");
+
                     b.Navigation("Reservations");
                 });
 

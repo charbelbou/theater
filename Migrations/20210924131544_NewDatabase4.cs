@@ -2,27 +2,27 @@
 
 namespace theater.Migrations
 {
-    public partial class ReservationsUpdated2 : Migration
+    public partial class NewDatabase4 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Confirmed",
-                table: "Reservations",
+                name: "FileName",
+                table: "Photos",
                 type: "nvarchar(max)",
                 nullable: true,
-                oldClrType: typeof(bool),
-                oldType: "bit");
+                oldClrType: typeof(int),
+                oldType: "int");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<bool>(
-                name: "Confirmed",
-                table: "Reservations",
-                type: "bit",
+            migrationBuilder.AlterColumn<int>(
+                name: "FileName",
+                table: "Photos",
+                type: "int",
                 nullable: false,
-                defaultValue: false,
+                defaultValue: 0,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
                 oldNullable: true);

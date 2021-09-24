@@ -1,7 +1,24 @@
 <h2>Reservations by play</h2>
 
-<a *ngFor="let play of plays" [routerLink]="['./', play.id]"
-  >{{ play.name }} <br
-/></a>
+<div *ngFor="let play of plays" class="play" (click)="clickPlay(play.id)">
+  <div class="title">
+    {{ play.name }} <br />
+    {{ play.columns * play.rows - play.reservations.length }} seats left <br />
+    {{ play.description }}
+  </div>
+  <img src="/uploads/{{ play.photo.fileName }}" alt="" />
+</div>
+
+<div
+  (click)="clickAdd()"
+  style="
+    display: inline-block;
+    border: 1px red solid;
+    vertical-align: bottom;
+    margin: 10px;
+  "
+>
+  <p style="margin: 15px; font-size: 25px">Add</p>
+</div>
 
 <!-- Displays all existing plays, clicking on them routes to the Admin Reservation page -->

@@ -18,10 +18,12 @@ export class AdminReservationsComponent implements OnInit {
     // Assign the Play's Id, which is parsed from the Url path
     this.id = router.url.split("/")[3];
   }
+  // Letters used to configure the number of rows
+  letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   // Used to render the rows and columns, and assign each one a unique "Place" attribute (eg. A3, B5..)
-  rows = ["A", "B", "C", "D"];
-  columns = [1, 2, 3, 4, 5, 6, 7];
+  rows = [];
+  columns = [];
 
   // Play Id
   id;
@@ -52,6 +54,15 @@ export class AdminReservationsComponent implements OnInit {
     this.myPlaysService.getPlay(this.id).subscribe((play) => {
       // assign play to this.play
       this.play = play;
+      // Configure the columns, fill an array from 1 to number of columns (1,2,3,4...)
+      for (let i = 1; i <= this.play.columns; i++) {
+        this.columns.push(i);
+      }
+      // Configure the rows, fill an array from the first letter of the alphabet
+      // to the ith number of rows (A,B,C,D...)
+      for (let i = 0; i < this.play.rows; i++) {
+        this.rows.push(this.letters[i]);
+      }
     });
   }
 

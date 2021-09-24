@@ -27,10 +27,5 @@
   Text input to input play name
   'Add' button
 -->
-<select name="theaters" [(ngModel)]="theaterId">
-  <option *ngFor="let theater of theaters" value="{{ theater.id }}">
-    {{ theater.name }}
-  </option>
-</select>
-<input type="text" placeholder="Play name" [(ngModel)]="this.name" />
-<input type="button" value="Add" (click)="AddPlay()" />
+
+<input type="button" value="Add Play" (click)="GoToAdd()" />

@@ -10,8 +10,8 @@ using theater.Persistence;
 namespace theater.Migrations
 {
     [DbContext(typeof(TheaterDbContext))]
-    [Migration("20210923100109_ReservationsUpdated5")]
-    partial class ReservationsUpdated5
+    [Migration("20210923191139_NewDatabase")]
+    partial class NewDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,9 +28,15 @@ namespace theater.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Columns")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rows")
+                        .HasColumnType("int");
 
                     b.Property<int?>("TheaterId")
                         .HasColumnType("int");

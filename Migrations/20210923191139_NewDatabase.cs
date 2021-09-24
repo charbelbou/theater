@@ -2,7 +2,7 @@
 
 namespace theater.Migrations
 {
-    public partial class New : Migration
+    public partial class NewDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +39,9 @@ namespace theater.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TheaterId = table.Column<int>(type: "int", nullable: true)
+                    TheaterId = table.Column<int>(type: "int", nullable: true),
+                    Rows = table.Column<int>(type: "int", nullable: false),
+                    Columns = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,15 +60,22 @@ namespace theater.Migrations
                 {
                     PlayId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Place = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Confirmed = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reservations", x => new { x.PlayId, x.UserId });
+                    table.PrimaryKey("PK_Reservations", x => new { x.PlayId, x.Place, x.UserId });
                     table.ForeignKey(
                         name: "FK_Reservations_Plays_PlayId",
                         column: x => x.PlayId,
                         principalTable: "Plays",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reservations_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -75,6 +84,11 @@ namespace theater.Migrations
                 name: "IX_Plays_TheaterId",
                 table: "Plays",
                 column: "TheaterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservations_UserId",
+                table: "Reservations",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -83,10 +97,10 @@ namespace theater.Migrations
                 name: "Reservations");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Plays");
 
             migrationBuilder.DropTable(
-                name: "Plays");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Theaters");

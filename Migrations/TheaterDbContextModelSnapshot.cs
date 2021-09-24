@@ -19,6 +19,27 @@ namespace theater.Migrations
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("theater.Models.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PlayId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayId")
+                        .IsUnique();
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("theater.Models.Play", b =>
                 {
                     b.Property<int>("Id")
@@ -26,9 +47,18 @@ namespace theater.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Columns")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rows")
+                        .HasColumnType("int");
 
                     b.Property<int?>("TheaterId")
                         .HasColumnType("int");
@@ -93,6 +123,15 @@ namespace theater.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("theater.Models.Photo", b =>
+                {
+                    b.HasOne("theater.Models.Play", null)
+                        .WithOne("Photo")
+                        .HasForeignKey("theater.Models.Photo", "PlayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("theater.Models.Play", b =>
                 {
                     b.HasOne("theater.Models.Theater", "Theater")
@@ -123,6 +162,8 @@ namespace theater.Migrations
 
             modelBuilder.Entity("theater.Models.Play", b =>
                 {
+                    b.Navigation("Photo");
+
                     b.Navigation("Reservations");
                 });
 

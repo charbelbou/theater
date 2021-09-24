@@ -2,7 +2,7 @@
 
 namespace theater.Migrations
 {
-    public partial class ReservationsUpdated1 : Migration
+    public partial class NewDatabase3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
