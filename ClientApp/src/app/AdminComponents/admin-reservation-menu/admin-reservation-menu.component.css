@@ -1,14 +1,18 @@
 .play {
   border: black 1px solid;
-  width: 250px;
-  height: 200px;
+  width: 500px;
   display: inline-block;
   margin: 10px;
+  height: 125px;
 }
 
 .title {
-  height: auto;
-  width: 100%;
-  text-align: center;
-  background-color: whitesmoke;
+  margin-top: 15px;
+}
+
+.picture {
+  float: left;
+  height: 100%;
+  width: auto;
+  margin-right: 20px;
 }

@@ -15,7 +15,12 @@ export class AdminReservationMenuComponent implements OnInit {
   ngOnInit() {
     // Get all plays using PlaysService, and assign them to this.plays
     this.myService.getPlays().subscribe((plays: any[]) => {
-      console.log(plays);
+      // Filter out the rejected reservations
+      plays.forEach((play) => {
+        play.reservations = play.reservations.filter(
+          (reservation) => reservation.confirmed != "rejected"
+        );
+      });
       this.plays = plays;
     });
   }

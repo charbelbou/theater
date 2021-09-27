@@ -1,12 +1,14 @@
 <h2>Reservations by play</h2>
 
 <div *ngFor="let play of plays" class="play" (click)="clickPlay(play.id)">
+  <img src="/uploads/{{ play.photo.fileName }}" alt="" class="picture" />
   <div class="title">
-    {{ play.name }} <br />
-    {{ play.columns * play.rows - play.reservations.length }} seats left <br />
-    {{ play.description }}
+    <b>{{ play.name }}</b> <br />
+    <u>{{ play.columns * play.rows - play.reservations.length }} seats left</u>
+    <br />
+    {{ play.description }} <br />
+    {{ play.theater.name }}
   </div>
-  <img src="/uploads/{{ play.photo.fileName }}" alt="" />
 </div>
 
 <div

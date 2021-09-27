@@ -10,7 +10,7 @@
 
 <div style="display: inline-block">
   <div *ngFor="let row of rows">
-    {{ row }}
+    <span style="vertical-align: bottom">{{ row }}</span>
     <div
       [ngClass]="class(row + column)"
       class="seat"

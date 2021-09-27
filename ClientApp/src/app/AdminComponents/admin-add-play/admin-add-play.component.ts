@@ -59,7 +59,7 @@ export class AdminAddPlayComponent implements OnInit {
       // Add the play object using PlaysService
       this.playService.addPlay(this.play).subscribe((returned: any) => {
         console.log(returned);
-        // Once play is added, navigate back to last page
+        // Once play is added, add the image and navigate back to last page
         this.photoService.upload(returned.id, file).subscribe((object) => {
           this.location.back();
         });
