@@ -34,4 +34,10 @@ export class AdminReservationMenuComponent implements OnInit {
   clickAdd() {
     this.router.navigate(["admin/add"]);
   }
+
+  // Calculates the places left in a play
+  // Multiply rows by columns and subtract the amount of reservations
+  calculatePlaces(play) {
+    return play.columns * play.rows - play.reservations.length;
+  }
 }

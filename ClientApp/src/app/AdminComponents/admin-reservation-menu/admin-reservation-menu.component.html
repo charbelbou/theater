@@ -1,26 +1,13 @@
 <h2>Reservations by play</h2>
 
-<div *ngFor="let play of plays" class="play" (click)="clickPlay(play.id)">
-  <img src="/uploads/{{ play.photo.fileName }}" alt="" class="picture" />
-  <div class="title">
-    <b>{{ play.name }}</b> <br />
-    <u>{{ play.columns * play.rows - play.reservations.length }} seats left</u>
-    <br />
-    {{ play.description }} <br />
-    {{ play.theater.name }}
-  </div>
-</div>
-
-<div
-  (click)="clickAdd()"
-  style="
-    display: inline-block;
-    border: 1px red solid;
-    vertical-align: bottom;
-    margin: 10px;
-  "
+<!-- Render a card for each play, binding the clickEvent to clickPlay,
+which navigates to reservation page -->
+<app-admin-card
+  (clickEvent)="clickPlay(play.id)"
+  *ngFor="let play of plays"
+  [passedPlay]="play"
 >
-  <p style="margin: 15px; font-size: 25px">Add</p>
-</div>
+</app-admin-card>
 
-<!-- Displays all existing plays, clicking on them routes to the Admin Reservation page -->
+<!-- Render a card for the add button, doesn't pass a play -->
+<app-admin-card (clickEvent)="clickAdd()"></app-admin-card>

@@ -1,0 +1,16 @@
+<!-- This div gets rendered if a play is passed to the component -->
+<div *ngIf="passedPlay" (click)="eventNavigate()" class="play">
+  <img src="/uploads/{{ passedPlay.photo.fileName }}" class="picture" />
+  <div class="title">
+    <b>{{ passedPlay.name }}</b> <br />
+    <u>{{ calculatePlaces(passedPlay) }} seats left</u>
+    <br />
+    {{ passedPlay.description }} <br />
+    {{ passedPlay.theater.name }}
+  </div>
+</div>
+
+<!-- This div gets rendered if a play isn't passed (meaning its the 'Add' button) -->
+<div (click)="eventNavigate()" *ngIf="!passedPlay" class="play add">
+  <div class="title addTitle">Add</div>
+</div>

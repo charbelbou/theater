@@ -24,3 +24,11 @@
 .selected {
   background-color: blue;
 }
+
+.rowtext {
+  vertical-align: bottom;
+}
+.columntext {
+  bottom: 25px;
+  position: relative;
+}

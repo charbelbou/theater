@@ -116,4 +116,8 @@ export class AdminReservationsComponent implements OnInit {
   findReservation(place) {
     return this.reservations.find((reservation) => reservation.place == place);
   }
+
+  calculatePlaces() {
+    return this.play.rows * this.play.columns - this.reservations.length;
+  }
 }

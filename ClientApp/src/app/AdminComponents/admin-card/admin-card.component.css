@@ -1,0 +1,26 @@
+.title {
+  margin-top: 15px;
+}
+
+.picture {
+  float: left;
+  height: 100%;
+  width: auto;
+  margin-right: 20px;
+}
+.play {
+  border: black 1px solid;
+  width: 500px;
+  display: inline-block;
+  margin: 10px;
+  height: 125px;
+}
+
+.addTitle {
+  margin: 30px;
+  font-size: 30px;
+}
+
+.add {
+  vertical-align: top;
+}

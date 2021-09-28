@@ -23,6 +23,7 @@ import { MyAuth } from "./Services/auth.service";
 import { CustomAuthGuard } from "./Services/auth-guard.service";
 import { AuthenticationComponent } from "./authentication/authentication.component";
 import { AdminAddPlayComponent } from "./admincomponents/admin-add-play/admin-add-play.component";
+import { AdminCardComponent } from './admincomponents/admin-card/admin-card.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { AdminAddPlayComponent } from "./admincomponents/admin-add-play/admin-ad
     ReservationsComponent,
     AdminReservationMenuComponent,
     AdminAddPlayComponent,
+    AdminCardComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),

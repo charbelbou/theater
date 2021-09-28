@@ -1,6 +1,6 @@
 <h1 *ngIf="play">{{ play.name }}</h1>
 <p>{{ play.description }}</p>
-<p>{{ play.rows * play.columns - reservations.length }} places left</p>
+<p>{{ calculatePlaces() }} places left</p>
 
 <!-- 
   Renders the theater's seats
@@ -8,18 +8,16 @@
   when clicked, triggers "triggerReservation" with row and column passed 
 -->
 
-<div style="display: inline-block">
+<div class="theaterTable">
   <div *ngFor="let row of rows">
-    <span style="vertical-align: bottom">{{ row }}</span>
+    <span class="rowtext">{{ row }}</span>
     <div
       [ngClass]="class(row + column)"
       class="seat"
       *ngFor="let column of columns"
       (click)="triggerReservation(row + column)"
     >
-      <span style="bottom: 25px; position: relative" *ngIf="row == 'A'">{{
-        column
-      }}</span>
+      <span class="columntext" *ngIf="row == 'A'">{{ column }}</span>
     </div>
   </div>
 </div>
@@ -29,7 +27,7 @@
   Shows the seat name, and a select box to choose whether to confirm or reject it
   Submit button, triggers submitReservation when clicked
 -->
-<div *ngIf="SelectedSeat" style="display: inline-block; vertical-align: top">
+<div *ngIf="SelectedSeat" class="decision">
   <p class="place">
     {{ SelectedSeat.place }}
   </p>

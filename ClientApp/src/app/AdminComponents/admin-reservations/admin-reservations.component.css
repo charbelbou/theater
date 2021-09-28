@@ -28,3 +28,21 @@
   display: inline-block;
   margin-right: 15px;
 }
+
+.rowtext {
+  vertical-align: bottom;
+}
+
+.theaterTable {
+  display: inline-block;
+}
+
+.columntext {
+  bottom: 25px;
+  position: relative;
+}
+
+.decision {
+  display: inline-block;
+  vertical-align: top;
+}
