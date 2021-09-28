@@ -1,0 +1,21 @@
+comments DONE
+collecting reservations then submitting them DONE
+Alert boxes DONE
+having reservation name DONE
+doing auth DONE
+
+Images DONE
+Configure rows/columns DONE
+New add play page DONE
+Cards for plays DONE
+Dropdown for account name DONE
+Column numbers at top DONE
+
+move styling to css DONE
+calculations in function DONE
+card component fix DONE 
+Add button fix DONE
+
+Lazy loading:
+	Admin folder -> admin module
+	Split app module into admin module and user module
